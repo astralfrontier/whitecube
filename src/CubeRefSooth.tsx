@@ -5,6 +5,37 @@ import SoothVisions from "./assets/sooth-visions.svg";
 
 import styles from "./CubeRefSooth.module.sass";
 
+const SOOTH_DATA = [
+  {
+    name: "Mysteries",
+    icon: SoothMysteries,
+    heart: "Stoic",
+    heartAliases: "aka Stoneheart",
+    associations: "Rats - Mirrors - Stone",
+  },
+  {
+    name: "Notions",
+    icon: SoothNotions,
+    heart: "Ardent",
+    heartAliases: "aka Stormheart",
+    associations: "Cats - Clocks - Wind",
+  },
+  {
+    name: "Secrets",
+    icon: SoothSecrets,
+    heart: "Galant",
+    heartAliases: "aka Flameheart",
+    associations: "Ravens - Books - Flame",
+  },
+  {
+    name: "Visions",
+    icon: SoothVisions,
+    heart: "Empath",
+    heartAliases: "aka Waveheart",
+    associations: "Swans - Blades - Water",
+  },
+];
+
 interface SoothIconProps {
   icon: string;
   description: string;
@@ -29,40 +60,30 @@ export default function CubeRefSooth() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">
-              <SoothIcon icon={SoothMysteries} description="Mysteries" />
-            </th>
-            <td>Mysteries</td>
-            <td>Stoic</td>
-            <td>Rats - Mirrors - Stone</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <SoothIcon icon={SoothNotions} description="Notions" />
-            </th>
-            <td>Notions</td>
-            <td>Ardent</td>
-            <td>Cats - Clocks - Wind</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <SoothIcon icon={SoothSecrets} description="Secrets" />
-            </th>
-            <td>Secrets</td>
-            <td>Galant</td>
-            <td>Ravens - Books - Flame</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <SoothIcon icon={SoothVisions} description="Visions" />
-            </th>
-            <td>Visions</td>
-            <td>Empath</td>
-            <td>Swans - Blades - Water</td>
-          </tr>
+          {SOOTH_DATA.map((sooth) => (
+            <tr>
+              <th scope="row">
+                <SoothIcon icon={sooth.icon} description={sooth.name} />
+              </th>
+              <th>{sooth.name}</th>
+              <th>
+                <span data-tooltip={sooth.heartAliases}>{sooth.heart}</span>
+              </th>
+              <th>{sooth.associations}</th>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <p>Trigger a card when...</p>
+      <ul>
+        <li>Characters move to a new location</li>
+        <li>A significant event occurs</li>
+        <li>A significant new NPC enters the scene</li>
+        <li>A PC suffers a Wound or Anguish</li>
+        <li>Something surprising happens</li>
+        <li>A GM shift is introduced</li>
+        <li>Flux occurs</li>
+      </ul>
       <p>
         <em>Rules reference: "The Gate" p. 72</em>
       </p>
