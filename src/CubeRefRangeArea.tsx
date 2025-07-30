@@ -1,6 +1,7 @@
-export default function CubeRefDistance() {
+export default function CubeRefRangeArea() {
   return (
     <>
+      <h1>Range and Area</h1>
       <table>
         <thead>
           <tr>
