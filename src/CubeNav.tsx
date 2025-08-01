@@ -8,18 +8,12 @@ export default function CubeNav() {
       </ul>
       <ul>
         <li>
-          <a href="#" className="contrast">
-            Link
-          </a>
-        </li>
-        <li>
-          <a href="#" className="contrast">
-            Link
-          </a>
-        </li>
-        <li>
-          <a href="#" className="contrast">
-            Link
+          <a
+            href="https://github.com/astralfrontier/whitecube"
+            className="contrast"
+            target="_blank"
+          >
+            GitHub
           </a>
         </li>
       </ul>
