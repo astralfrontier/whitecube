@@ -1,5 +1,5 @@
 import CubeDepletionTracker from "./CubeDepletionTracker";
-import CubeRefRangeArea from "./CubeRefRangeArea";
+import CubeRefDistanceArea from "./CubeRefDistanceArea";
 import CubeRefSooth from "./CubeRefSooth";
 
 export default function CubeHome() {
@@ -10,7 +10,7 @@ export default function CubeHome() {
           <CubeRefSooth />
         </div>
         <div>
-          <CubeRefRangeArea />
+          <CubeRefDistanceArea />
         </div>
       </div>
       <div>

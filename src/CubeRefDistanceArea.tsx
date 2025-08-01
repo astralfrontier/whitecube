@@ -1,4 +1,4 @@
-export default function CubeRefRangeArea() {
+export default function CubeRefDistanceArea() {
   return (
     <>
       <h1>Range and Area</h1>
@@ -13,25 +13,25 @@ export default function CubeRefRangeArea() {
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Close</th>
+            <th scope="row">Close/Point-Blank</th>
             <td>Small</td>
             <td>Anything close enough to touch</td>
             <td>Up to 10 feet (3m)</td>
           </tr>
           <tr>
-            <th scope="row">Near</th>
+            <th scope="row">Near/Short</th>
             <td>Medium</td>
             <td>Something you could reach quickly</td>
             <td>10-50 feet (3-15m)</td>
           </tr>
           <tr>
-            <th scope="row">Far</th>
+            <th scope="row">Far/Long</th>
             <td>Large</td>
             <td>Something you can see clearly but not reach quickly</td>
             <td>50-100 feet (15-30m)</td>
           </tr>
           <tr>
-            <th scope="row">Very Far</th>
+            <th scope="row">Very Far/Very Long</th>
             <td>Very large</td>
             <td>Something you can see but not clearly</td>
             <td>100-500 feet (30-150m)</td>
