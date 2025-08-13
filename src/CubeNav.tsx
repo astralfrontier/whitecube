@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function CubeNav() {
   return (
     <nav>
@@ -7,6 +9,16 @@ export default function CubeNav() {
         </li>
       </ul>
       <ul>
+        <li>
+          <Link to={"/"} className="contrast">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to={"/weaver"} className="contrast">
+            Weaver
+          </Link>
+        </li>
         <li>
           <a
             href="https://github.com/astralfrontier/whitecube"
