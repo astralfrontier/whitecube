@@ -1,5 +1,5 @@
 import { map, sum, times } from "ramda";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface MakerCosts {
   orbs: number;
@@ -195,6 +195,12 @@ export default function MakerRef() {
   const onChangeVenture: React.ChangeEventHandler<HTMLInputElement> =
     useCallback((e) => setVenture(parseInt(e.target.value)), []);
 
+  useEffect(() => {
+    if (itemLevel > maxItemLevel) {
+      setItemLevel(maxItemLevel);
+    }
+  }, [itemLevel, maxItemLevel]);
+
   const materialCost = useMemo(
     () => materialCostByLevel(itemLevel, makerDegree),
     [itemLevel, makerDegree]
@@ -242,6 +248,7 @@ export default function MakerRef() {
                 value={itemLevel}
                 onChange={onChangeItemLevel}
               />
+              <small>Max level is {maxItemLevel} for your Degree</small>
             </label>
             <label>
               Modifiers
@@ -251,6 +258,12 @@ export default function MakerRef() {
                 value={modifiers}
                 onChange={onChangeModifiers}
               />
+              <small>
+                +1 per -1 day of work
+                {makerDegree == 2 && (
+                  <>; +2 to make Ephemera in half the time</>
+                )}
+              </small>
             </label>
             <label>
               Venture
@@ -260,16 +273,19 @@ export default function MakerRef() {
                 value={venture}
                 onChange={onChangeVenture}
               />
+              <small>Craft skill; Tool level; Intellect bene</small>
             </label>
           </fieldset>
         </div>
         <div>
           <table>
             <thead>
-              <th>Step</th>
-              <th>Cost</th>
-              <th>Check</th>
-              <th>Odds</th>
+              <tr>
+                <th>Step</th>
+                <th>Cost</th>
+                <th>Check</th>
+                <th>Odds</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
@@ -350,15 +366,6 @@ export default function MakerRef() {
               <> (Half time for Ephemera with a higher modifier)</>
             )}
             {makerDegree > 2 && <> (Half time for Ephemera)</>}
-          </p>
-          <p>
-            Modifiers:
-            <ul>
-              <li>+1 per -1 day of work</li>
-              {makerDegree == 2 && (
-                <li>+2 to make Ephemera in half the time</li>
-              )}
-            </ul>
           </p>
         </div>
       </div>
