@@ -74,16 +74,48 @@ export default function CubeRefSooth() {
           ))}
         </tbody>
       </table>
-      <p>Trigger a card when...</p>
-      <ul>
-        <li>Characters move to a new location</li>
-        <li>A significant event occurs</li>
-        <li>A significant new NPC enters the scene</li>
-        <li>A PC suffers a Wound or Anguish</li>
-        <li>Something surprising happens</li>
-        <li>A GM shift is introduced</li>
-        <li>Flux occurs</li>
-      </ul>
+      <div className="grid">
+        <div className={styles.small}>
+          <p>Trigger a card when...</p>
+          <ul>
+            <li>Characters move to a new location</li>
+            <li>A significant event occurs</li>
+            <li>A significant new NPC enters the scene</li>
+            <li>A PC suffers a Wound or Anguish</li>
+            <li>Something surprising happens</li>
+            <li>A GM shift is introduced</li>
+            <li>Flux occurs</li>
+          </ul>
+        </div>
+        <div className={styles.small}>
+          <ul>
+            <li>
+              <strong>Sovereign:</strong> +1 to all actions, +2 if heart is
+              linked to family
+            </li>
+            <li>
+              <strong>Nemesis:</strong> -1 to all actions, -2 if heart is linked
+              to family
+            </li>
+            <li>
+              <strong>Defender:</strong> +2 to all actions if heart is linked to
+              family
+            </li>
+            <li>
+              <strong>Apprentice:</strong> -1 to all actions if heart is linked
+              to family
+            </li>
+            <li>
+              <strong>Companion:</strong> Duplicates the effects of the
+              previously played card (if played first in a session on the Silver
+              Sun, immediately play another card on the next sun)
+            </li>
+            <li>
+              <strong>Adept:</strong> Play another card on the next sun
+            </li>
+          </ul>
+        </div>
+      </div>
       <p>
         <em>Rules reference: "The Gate" p. 72</em>
       </p>
