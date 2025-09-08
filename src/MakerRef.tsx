@@ -104,12 +104,22 @@ const POWER_SOURCES_COSTS: Partial<MakerCosts>[] = [
   },
 ];
 
-function materialCostByLevel(level: number): MakerCosts {
+function materialCostByLevel(level: number, makerDegree: number): MakerCosts {
+  let effectiveLevel = level - 1;
+  if (makerDegree >= 3) {
+    effectiveLevel = effectiveLevel - 1;
+  }
+  if (makerDegree >= 5) {
+    effectiveLevel = effectiveLevel - 1;
+  }
+  if (makerDegree == 6) {
+    effectiveLevel = effectiveLevel - 1;
+  }
   return {
     orbs: 0,
     crystalOrbs: 0,
     magecoins: 0,
-    ...MATERIALS_COSTS[level - 1],
+    ...MATERIALS_COSTS[effectiveLevel],
   };
 }
 
@@ -168,18 +178,26 @@ export default function MakerRef() {
   const [modifiers, setModifiers] = useState<number>(0);
   const [venture, setVenture] = useState<number>(0);
 
+  const maxItemLevel = useMemo(
+    () => [4, 6, 7, 8, 9, 17][makerDegree - 1] || 0,
+    [makerDegree]
+  );
+
   const onChangeMakerDegree: React.ChangeEventHandler<HTMLInputElement> =
     useCallback((e) => setMakerDegree(parseInt(e.target.value)), []);
   const onChangeItemLevel: React.ChangeEventHandler<HTMLInputElement> =
-    useCallback((e) => setItemLevel(parseInt(e.target.value)), []);
+    useCallback(
+      (e) => setItemLevel(Math.min(parseInt(e.target.value), maxItemLevel)),
+      [maxItemLevel]
+    );
   const onChangeModifiers: React.ChangeEventHandler<HTMLInputElement> =
     useCallback((e) => setModifiers(parseInt(e.target.value)), []);
   const onChangeVenture: React.ChangeEventHandler<HTMLInputElement> =
     useCallback((e) => setVenture(parseInt(e.target.value)), []);
 
   const materialCost = useMemo(
-    () => materialCostByLevel(itemLevel),
-    [itemLevel]
+    () => materialCostByLevel(itemLevel, makerDegree),
+    [itemLevel, makerDegree]
   );
 
   const ingredientCosts = useMemo(
@@ -319,6 +337,7 @@ export default function MakerRef() {
           </table>
         </div>
         <div>
+          {}
           <p>
             <strong>Sorcery investment:</strong> {itemLevel}
           </p>
