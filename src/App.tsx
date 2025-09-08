@@ -3,6 +3,7 @@ import "./App.sass";
 import CubeNav from "./CubeNav";
 import CubeHome from "./CubeHome";
 import WeaverHome from "./WeaverHome";
+import MakerHome from "./MakerHome";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <CubeNav />
         <Routes>
           <Route path="/" element={<CubeHome />} />
+          <Route path="/maker" element={<MakerHome />} />
           <Route path="/weaver" element={<WeaverHome />} />
         </Routes>
       </main>

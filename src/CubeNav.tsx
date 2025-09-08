@@ -15,6 +15,11 @@ export default function CubeNav() {
           </Link>
         </li>
         <li>
+          <Link to={"/maker"} className="contrast">
+            Maker
+          </Link>
+        </li>
+        <li>
           <Link to={"/weaver"} className="contrast">
             Weaver
           </Link>
