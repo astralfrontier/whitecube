@@ -5,102 +5,136 @@ interface MakerCosts {
   orbs: number;
   crystalOrbs: number;
   magecoins: number;
+  examples?: string;
 }
 
 const MATERIALS_COSTS: Partial<MakerCosts>[] = [
   {
     crystalOrbs: 10,
+    examples: "iron, common wood, granite, glass",
   },
   {
     crystalOrbs: 25,
+    examples: "crystal, fine iron, goblinbone, steel",
   },
   {
     crystalOrbs: 50,
+    examples: "gold, silver, human flesh, ancient oak",
   },
   {
     crystalOrbs: 75,
+    examples: "emerald, diamond, ice",
   },
   {
     crystalOrbs: 100,
+    examples: "silver yak hide, taborwire thread, hastric wood",
   },
   {
     crystalOrbs: 150,
+    examples: "lusterstone, ebonwood, frozen curses, desaldium",
   },
   {
     crystalOrbs: 200,
+    examples: "demonbone, demonflesh",
   },
   {
     magecoins: 1,
+    examples: "talish glass",
   },
   {
     magecoins: 2,
+    examples: "sands of time, solidified song",
   },
   {
     magecoins: 5,
+    examples: "pure love, godflesh",
   },
 ];
 
 const INGREDIENTS_COSTS: Partial<MakerCosts>[] = [
   {
     orbs: 10,
+    examples: "sugar, salt, spices, honey, caterpillar, mistletoe",
   },
   {
     orbs: 50,
+    examples:
+      "bat wing, rat tail, newt's eye, elderflower stems, black beetle eye, powdered moonstone, liquid silver, bone dust, nightshade, peacock feather",
   },
   {
     orbs: 100,
+    examples:
+      "crocodile heart, powdered lilbana leaf, eyelash of an infant, elderbrin tears",
   },
   {
     crystalOrbs: 2,
+    examples: "toad hairs, nettle bird feather, mummy dust",
   },
   {
     crystalOrbs: 10,
+    examples: "gravel trod upon by a king",
   },
   {
     crystalOrbs: 20,
+    examples: "polist petals",
   },
   {
     crystalOrbs: 50,
+    examples: "powdered despair, truespider eye",
   },
   {
     magecoins: 1,
+    examples: "errix hound blood",
   },
   {
     magecoins: 2,
+    examples: "secret name of an angel",
   },
   {
     magecoins: 3,
+    examples: "godsblood",
   },
 ];
 
 const POWER_SOURCES_COSTS: Partial<MakerCosts>[] = [
-  {},
+  {
+    examples: "good intentions",
+  },
   {
     crystalOrbs: 4,
+    examples: "heat from a silent fire, stray idea",
   },
   {
     crystalOrbs: 8,
+    examples: "moon fox brain",
   },
   {
     crystalOrbs: 15,
+    examples: "qaat leaf solution",
   },
   {
     crystalOrbs: 30,
+    examples: "vug essence",
   },
   {
     crystalOrbs: 50,
+    examples: "gold trapped in crystal",
   },
   {
     crystalOrbs: 100,
+    examples: "demon's heart",
   },
   {
     magecoins: 1,
+    examples: "durrantix eye",
   },
   {
     magecoins: 2,
+    examples: "vigor shard",
   },
   {
     magecoins: 5,
+    examples: "sun essence",
   },
 ];
 
@@ -145,7 +179,7 @@ function amount(amount: number, label: string): string {
   return `${amount} ${label}${amount > 1 ? "s" : ""}`;
 }
 
-function formatCost(costs: MakerCosts): string {
+function formatCost(costs: MakerCosts): React.ReactNode {
   const s = [];
   if (costs.orbs > 0) {
     s.push(amount(costs.orbs, "orb"));
@@ -156,7 +190,12 @@ function formatCost(costs: MakerCosts): string {
   if (costs.magecoins > 0) {
     s.push(amount(costs.magecoins, "magecoin"));
   }
-  return s.join(", ");
+
+  if (costs.examples) {
+    return <span data-tooltip={costs.examples}>{s.join(", ")}</span>;
+  } else {
+    return s.join(", ");
+  }
 }
 
 function odds(dl: number, venture: number): string {
@@ -270,6 +309,7 @@ export default function MakerRef() {
               <input
                 type={"number"}
                 name="venture"
+                min={0}
                 value={venture}
                 onChange={onChangeVenture}
               />
@@ -283,7 +323,7 @@ export default function MakerRef() {
               <tr>
                 <th>Step</th>
                 <th>Cost</th>
-                <th>Check</th>
+                <th>Challenge</th>
                 <th>Odds</th>
               </tr>
             </thead>
@@ -299,7 +339,7 @@ export default function MakerRef() {
                   <tr key={`itemLevel${i + 1}`}>
                     <td>Add Level {i + 1} Ingredient</td>
                     <td>{formatCost(ingredientCosts[i])}</td>
-                    <td>DL {i + 1 + modifiers}</td>
+                    <td>{Math.max(i + 1 + modifiers - venture, 0)}</td>
                     <td>{odds(i + 1 + modifiers, venture)}</td>
                   </tr>
                 ),
@@ -308,11 +348,16 @@ export default function MakerRef() {
               <tr>
                 <td>Add Power Source</td>
                 <td>{formatCost(powerSourceCosts)}</td>
-                <td>DL {itemLevel + 1 + modifiers}</td>
+                <td>{Math.max(itemLevel + 1 + modifiers - venture, 0)}</td>
                 <td>{odds(itemLevel + 1 + modifiers, venture)}</td>
               </tr>
             </tbody>
           </table>
+          <small>
+            Note: "Challenge" is the challenge level taking venture into
+            account. "Odds" is the chance of success. If this is not 100%, you
+            may need Catalysts and Stabilizers to succeed.
+          </small>
         </div>
       </div>
       <div className="grid">
