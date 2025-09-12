@@ -259,7 +259,7 @@ export default function MakerRef() {
                 onChange={onChangeModifiers}
               />
               <small>
-                +1 per -1 day of work
+                +1 per -1 day of work; -1/-2 for Minor/Major Side Effects
                 {makerDegree == 2 && (
                   <>; +2 to make Ephemera in half the time</>
                 )}
