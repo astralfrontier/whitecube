@@ -390,7 +390,7 @@ export default function WeaverRef() {
       <h1>Weaving Effect</h1>
       <fieldset>
         <legend>Aggregates:</legend>
-        {splitEvery(6, WEAVER_AGGREGATES).map((aggregates) => (
+        {splitEvery(5, WEAVER_AGGREGATES).map((aggregates) => (
           <div className="grid">
             {aggregates.map((aggregate) => (
               <div>
