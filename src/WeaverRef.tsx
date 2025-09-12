@@ -83,6 +83,13 @@ const WEAVER_AGGREGATES: WeaverAggregate[] = [
     defaultRange: RANGES.Touch,
   },
   {
+    name: "Darkness",
+    qualities: ["Cold", "Stealth", "Decay", "Obfuscation", "Night", "Division"],
+    absences: ["Light", "Truth", "Clarity"],
+    defaultDuration: DURATIONS.OneRound,
+    defaultRange: RANGES.Close,
+  },
+  {
     name: "Diamond",
     qualities: [
       "Strength",
@@ -225,6 +232,20 @@ const WEAVER_AGGREGATES: WeaverAggregate[] = [
     ],
     absences: ["Action", "Movement", "Clarity"],
     defaultDuration: DURATIONS.Short,
+    defaultRange: RANGES.Touch,
+  },
+  {
+    name: "Temptation",
+    qualities: [
+      "Allure",
+      "Value",
+      "Corruption",
+      "Seduction",
+      "Guilt",
+      "Obsession",
+    ],
+    absences: ["Purity", "Calm", "Self-control"],
+    defaultDuration: DURATIONS.OneRound,
     defaultRange: RANGES.Touch,
   },
   {
