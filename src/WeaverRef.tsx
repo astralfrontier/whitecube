@@ -341,7 +341,7 @@ export default function WeaverRef() {
   const bestRange = useMemo(
     () =>
       Math.max(
-        ...map((aggregate) => aggregate.defaultDuration, selectedAggregates)
+        ...map((aggregate) => aggregate.defaultRange, selectedAggregates)
       ),
     [selectedAggregates]
   );
