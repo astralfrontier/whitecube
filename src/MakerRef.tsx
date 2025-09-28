@@ -260,6 +260,11 @@ export default function MakerRef() {
     [materialCost, ingredientCosts, powerSourceCosts]
   );
 
+  const excessVenture = useMemo(
+    () => venture - (itemLevel + 1 + modifiers),
+    [venture, itemLevel, modifiers]
+  );
+
   return (
     <>
       <h1>Maker's Matrix</h1>
@@ -412,6 +417,13 @@ export default function MakerRef() {
             )}
             {makerDegree > 2 && <> (Half time for Ephemera)</>}
           </p>
+          {excessVenture > 0 && (
+            <p>
+              You have {excessVenture} venture above and beyond what's needed.
+              Consider reducing the time to make the item (which gives a
+              modifier of +1 per day saved).
+            </p>
+          )}
         </div>
       </div>
     </>
