@@ -1,5 +1,6 @@
 import { map, sum, times } from "ramda";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 
 interface MakerCosts {
   orbs: number;
@@ -212,10 +213,19 @@ function sumCosts(costs: MakerCosts[]): MakerCosts {
 }
 
 export default function MakerRef() {
-  const [makerDegree, setMakerDegree] = useState<number>(1);
-  const [itemLevel, setItemLevel] = useState<number>(1);
-  const [modifiers, setModifiers] = useState<number>(0);
-  const [venture, setVenture] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [makerDegree, setMakerDegree] = useState<number>(
+    parseInt(searchParams.get("d") || "1") || 1
+  );
+  const [itemLevel, setItemLevel] = useState<number>(
+    parseInt(searchParams.get("l") || "1") || 1
+  );
+  const [modifiers, setModifiers] = useState<number>(
+    parseInt(searchParams.get("m") || "0") || 0
+  );
+  const [venture, setVenture] = useState<number>(
+    parseInt(searchParams.get("v") || "0") || 0
+  );
 
   const maxItemLevel = useMemo(
     () => [4, 6, 7, 8, 9, 17][makerDegree - 1] || 0,
@@ -223,16 +233,53 @@ export default function MakerRef() {
   );
 
   const onChangeMakerDegree: React.ChangeEventHandler<HTMLInputElement> =
-    useCallback((e) => setMakerDegree(parseInt(e.target.value)), []);
+    useCallback(
+      (e) => {
+        const newMakerDegree = parseInt(e.target.value);
+        setMakerDegree(newMakerDegree);
+        setSearchParams((params) => {
+          params.set("d", `${newMakerDegree}`);
+          return params;
+        });
+      },
+      [setSearchParams]
+    );
   const onChangeItemLevel: React.ChangeEventHandler<HTMLInputElement> =
     useCallback(
-      (e) => setItemLevel(Math.min(parseInt(e.target.value), maxItemLevel)),
-      [maxItemLevel]
+      (e) => {
+        const newItemLevel = Math.min(parseInt(e.target.value), maxItemLevel);
+        setItemLevel(newItemLevel);
+        setSearchParams((params) => {
+          params.set("l", `${newItemLevel}`);
+          return params;
+        });
+      },
+      [maxItemLevel, setSearchParams]
     );
   const onChangeModifiers: React.ChangeEventHandler<HTMLInputElement> =
-    useCallback((e) => setModifiers(parseInt(e.target.value)), []);
+    useCallback(
+      (e) => {
+        const newModifier = parseInt(e.target.value);
+        setModifiers(newModifier);
+        setSearchParams((params) => {
+          params.set("m", `${newModifier}`);
+          return params;
+        });
+      },
+      [setSearchParams]
+    );
   const onChangeVenture: React.ChangeEventHandler<HTMLInputElement> =
-    useCallback((e) => setVenture(parseInt(e.target.value)), []);
+    useCallback(
+      (e) => {
+        const newVenture = parseInt(e.target.value);
+        setVenture(newVenture);
+        setSearchParams((params) => {
+          params.set("v", `${newVenture}`);
+          return params;
+        });
+      },
+      [setSearchParams]
+    );
 
   useEffect(() => {
     if (itemLevel > maxItemLevel) {
