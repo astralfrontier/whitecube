@@ -8,6 +8,7 @@ import {
   without,
 } from "ramda";
 import { useCallback, useMemo, useState } from "react";
+import { Helmet } from "react-helmet";
 
 const RANGES = {
   Touch: 0,
@@ -387,6 +388,23 @@ export default function WeaverRef() {
 
   return (
     <>
+      <Helmet>
+        <title>{`Weaving ${selectedAggregateNames.join(
+          ", "
+        )} | White Cube`}</title>
+        <meta
+          property="og:title"
+          content={`Weaving ${selectedAggregateNames.join(", ")} | White Cube`}
+        />
+        <meta
+          property="og:description"
+          content={`Weaving ${selectedAggregateNames.join(
+            ", "
+          )}. Qualities: ${qualities.join(
+            ", "
+          )}. Absences: {absences.join(", ")}`}
+        />
+      </Helmet>
       <h1>Weaving Effect</h1>
       <fieldset>
         <legend>Aggregates:</legend>

@@ -1,6 +1,7 @@
 import { map, sum, times } from "ramda";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
+import { Helmet } from "react-helmet";
 
 interface MakerCosts {
   orbs: number;
@@ -312,8 +313,24 @@ export default function MakerRef() {
     [venture, itemLevel, modifiers]
   );
 
+  const totalCostsFormatted = useMemo(
+    () => formatCost(totalCosts),
+    [totalCosts]
+  );
+
   return (
     <>
+      <Helmet>
+        <title>{`Maker: item of level ${itemLevel} | White Cube`}</title>
+        <meta
+          property="og:title"
+          content={`Maker: item of level ${itemLevel} | White Cube`}
+        />
+        <meta
+          property="og:description"
+          content={`A Maker of Degree ${makerDegree} wants to make an ${itemLevel} level item, costing ${totalCostsFormatted}`}
+        />
+      </Helmet>
       <h1>Maker's Matrix</h1>
       <div className="grid">
         <div>
@@ -455,7 +472,7 @@ export default function MakerRef() {
             <strong>Sorcery investment:</strong> {itemLevel}
           </p>
           <p>
-            <strong>Total Costs:</strong> {formatCost(totalCosts)}
+            <strong>Total Costs:</strong> {totalCostsFormatted}
           </p>
           <p>
             <strong>Total Time:</strong> {itemLevel * 2} days
