@@ -182,14 +182,14 @@ function amount(amount: number, label: string): string {
 
 function formatCost(costs: MakerCosts): React.ReactNode {
   const s = [];
-  if (costs.orbs > 0) {
-    s.push(amount(costs.orbs, "orb"));
+  if (costs.magecoins > 0) {
+    s.push(amount(costs.magecoins, "magecoin"));
   }
   if (costs.crystalOrbs > 0) {
     s.push(amount(costs.crystalOrbs, "crystal orb"));
   }
-  if (costs.magecoins > 0) {
-    s.push(amount(costs.magecoins, "magecoin"));
+  if (costs.orbs > 0) {
+    s.push(amount(costs.orbs, "orb"));
   }
 
   if (costs.examples) {
