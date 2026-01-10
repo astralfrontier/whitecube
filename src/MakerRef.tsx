@@ -213,6 +213,26 @@ function sumCosts(costs: MakerCosts[]): MakerCosts {
   };
 }
 
+interface ParseAndClampOptions {
+  min?: number;
+  max?: number;
+}
+
+function parseAndClamp(value: string, options: ParseAndClampOptions, fn: (newValue: number) => void) {
+  if (value == null || value == undefined || value == '') {
+    // Don't parse empty strings
+    return;
+  }
+  let newValue = parseInt(value);
+  if (options.min) {
+    newValue = Math.max(options.min, newValue);
+  }
+  if (options.max) {
+    newValue = Math.min(newValue, options.max);
+  }
+  fn(newValue);
+}
+
 export default function MakerRef() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [makerDegree, setMakerDegree] = useState<number>(
@@ -236,48 +256,52 @@ export default function MakerRef() {
   const onChangeMakerDegree: React.ChangeEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
-        const newMakerDegree = parseInt(e.target.value);
-        setMakerDegree(newMakerDegree);
-        setSearchParams((params) => {
-          params.set("d", `${newMakerDegree}`);
-          return params;
-        });
+        parseAndClamp(e.target.value, {min: 1, max: 6}, (newMakerDegree) => {
+          setMakerDegree(newMakerDegree);
+          setSearchParams((params) => {
+            params.set("d", `${newMakerDegree}`);
+            return params;
+          });
+        })
       },
       [setSearchParams]
     );
   const onChangeItemLevel: React.ChangeEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
-        const newItemLevel = Math.min(parseInt(e.target.value), maxItemLevel);
-        setItemLevel(newItemLevel);
-        setSearchParams((params) => {
-          params.set("l", `${newItemLevel}`);
-          return params;
-        });
+        parseAndClamp(e.target.value, {min: 1, max: maxItemLevel}, (newItemLevel) => {
+          setItemLevel(newItemLevel);
+          setSearchParams((params) => {
+            params.set("l", `${newItemLevel}`);
+            return params;
+          });
+        })
       },
       [maxItemLevel, setSearchParams]
     );
   const onChangeModifiers: React.ChangeEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
-        const newModifier = parseInt(e.target.value);
-        setModifiers(newModifier);
-        setSearchParams((params) => {
-          params.set("m", `${newModifier}`);
-          return params;
-        });
+        parseAndClamp(e.target.value, {}, (newModifier) => {
+          setModifiers(newModifier);
+          setSearchParams((params) => {
+            params.set("m", `${newModifier}`);
+            return params;
+          });
+        })
       },
       [setSearchParams]
     );
   const onChangeVenture: React.ChangeEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
-        const newVenture = parseInt(e.target.value);
-        setVenture(newVenture);
-        setSearchParams((params) => {
-          params.set("v", `${newVenture}`);
-          return params;
-        });
+        parseAndClamp(e.target.value, {min: 0}, (newVenture) => {
+          setVenture(newVenture);
+          setSearchParams((params) => {
+            params.set("v", `${newVenture}`);
+            return params;
+          });
+        })
       },
       [setSearchParams]
     );
